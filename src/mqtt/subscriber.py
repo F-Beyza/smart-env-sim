@@ -4,27 +4,27 @@ import paho.mqtt.client as mqtt
 import json
 from mongo_handler.mongo_handler import MongoHandler
 
-broker = "localhost"
-port = 1883
-topic = "sensor/data"
-
 mongo_handler = MongoHandler()
 
 def on_connect(client, userdata, flags, rc):
-    print("[✓] Connected with result code " + str(rc))
-    client.subscribe(topic)
+    print("[✓] Connected to MQTT broker")
+    client.subscribe("sensor/data")
 
 def on_message(client, userdata, msg):
-    data = json.loads(msg.payload)
-    print("[←] Received:", data)
+    payload = msg.payload.decode()
+    print("[•] Message received:", payload)
 
-def main():
-    client = mqtt.Client()
-    client.on_connect = on_connect
-    client.on_message = on_message
+    try:
+        data = json.loads(payload)
+        mongo_handler.insert_data(data)
+        print("[✓] Data inserted into MongoDB")
+    except json.JSONDecodeError:
+        print("[✗] Invalid JSON format")
 
-    client.connect(broker, port, 60)
-    client.loop_forever()
+client = mqtt.Client()
+client.on_connect = on_connect
+client.on_message = on_message
 
-if __name__ == "__main__":
-    main()
+client.connect("localhost", 1883, 60)
+print("[•] Waiting for messages...")
+client.loop_forever()
