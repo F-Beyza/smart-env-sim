@@ -2,10 +2,13 @@
 
 import paho.mqtt.client as mqtt
 import json
+from mongo_handler.mongo_handler import MongoHandler
 
 broker = "localhost"
 port = 1883
 topic = "sensor/data"
+
+mongo_handler = MongoHandler()
 
 def on_connect(client, userdata, flags, rc):
     print("[✓] Connected with result code " + str(rc))
