@@ -4,7 +4,7 @@ from pymongo import MongoClient
 import logging
 
 class MongoHandler:
-    def __init__(self, db_name='env_data', collection_name='sensor_data'):
+    def __init__(self, db_name='smart_env_db', collection_name='sensor_data'):
         self.client = MongoClient("mongodb://localhost:27017/")
         self.db = self.client[db_name]
         self.collection = self.db[collection_name]
