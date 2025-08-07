@@ -1,5 +1,6 @@
 # src/mqtt/subscriber.py
 
+<<<<<<< HEAD
  #       import paho.mqtt.client as mqtt
   #      import json
    #     from mongo_handler.mongo_handler import MongoHandler
@@ -28,6 +29,19 @@
  #       client.connect("localhost", 1883, 60)
   #      print("[•] Waiting for messages...")
    #     client.loop_forever()
+=======
+import paho.mqtt.client as mqtt
+import json
+
+import sys
+import os
+
+# Bir üst dizini sys.path'a ekle
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
+from mongo_handler.mongo_handler import MongoHandler
+>>>>>>> refactor-mqtt-callbacks
 
 
 
